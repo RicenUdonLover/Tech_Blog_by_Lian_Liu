@@ -1,25 +1,25 @@
 const router = require('express').Router();
-const { Gallery, Painting } = require('../models');
+const { Post, User } = require('../models');
 // TODO: Import the custom middleware
 const withAuth = require('../utils/auth')
-// GET all galleries for homepage
+// GET all posts for homepage
 router.get('/', async (req, res) => {
   try {
-    const dbGalleryData = await Gallery.findAll({
+    const dbPostData = await Post.findAll({
       include: [
         {
-          model: Painting,
-          attributes: ['filename', 'description'],
+          model: User,
+          attributes: ['username'],
         },
       ],
     });
 
-    const galleries = dbGalleryData.map((gallery) =>
-      gallery.get({ plain: true })
+    const posts = dbPostData.map((Post) =>
+      Post.get({ plain: true })
     );
 
     res.render('homepage', {
-      galleries,
+      posts,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -28,29 +28,24 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET one gallery
+// GET one Post
 // TODO: Replace the logic below with the custom middleware
-router.get('/gallery/:id', withAuth, async (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
   
-    // If the user is logged in, allow them to view the gallery
+    // If the user is logged in, allow them to view the Post
     try {
-      const dbGalleryData = await Gallery.findByPk(req.params.id, {
+      const dbPostData = await Post.findByPk(req.params.id, {
         include: [
           {
-            model: Painting,
-            attributes: [
-              'id',
-              'title',
-              'artist',
-              'exhibition_date',
-              'filename',
-              'description',
-            ],
+            model: User,
+            attributes: {
+              exclude: ['password']
+            },
           },
         ],
       });
-      const gallery = dbGalleryData.get({ plain: true });
-      res.render('gallery', { gallery, loggedIn: req.session.loggedIn });
+      const post = dbPostData.get({ plain: true });
+      res.render('post', { post, loggedIn: req.session.loggedIn });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
