@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Post, User } = require('../models');
 const withAuth = require('../utils/auth')
-// GET all posts for homepage
+// GET all data for homepage
 router.get('/', async (req, res) => {
   try {
     const dbPostData = await Post.findAll({
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     const posts = dbPostData.map((Post) =>
       Post.get({ plain: true })
     );
-
+    console.log(posts)
     res.render('homepage', {
       posts,
       loggedIn: req.session.loggedIn,
@@ -48,7 +48,6 @@ router.get('/post/:id', withAuth, async (req, res) => {
       console.log(err);
       res.status(500).json(err);
     }
-  
 });
 
 
@@ -89,7 +88,8 @@ router.post('/login', async (req, res) => {
       req.session.loggedIn = true;
       res
         .status(200)
-        .json({ user: dbUserData, message: 'You are now logged in!' });
+        .json({ user: dbUserData, message: 'You are now logged in!' })
+        .redirect('/');
     });
   } catch (err) {
     console.log(err);

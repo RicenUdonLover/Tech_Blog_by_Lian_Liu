@@ -5,10 +5,9 @@ const { User, Post } = require('../../models');
 router.post('/', async (req, res) => {
   try {
     const dbUserData = await User.create(req.body);
-
     req.session.save(() => {
       req.session.loggedIn = true;
-      res.status(200).json({ dbUserData, message: 'User created' });
+      res.status(200).json({ user: dbUserData, message: 'User created' });
     });
   } catch (err) {
     console.log(`Error in POST /api/users`, err);
