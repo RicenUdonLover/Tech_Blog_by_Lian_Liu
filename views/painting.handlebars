@@ -6,3 +6,18 @@
     <p>Exhibition open until: {{ format_date painting.exhibition_date}}</p>
   </div>
 </section>
+
+
+
+
+
+<section class="player-hand row" id="{{id}}">
+  <div class="container col">
+      <img class="1st-hand" src="{{player.hand[0].img_path}}" alt="{{player.hand[0].name}}">
+
+  </div>
+  <div class="container col">
+      <img class="2nd-hand" src="{{player.hand[1].img_path}}" alt="{{player.hand[1].name}}">
+
+  </div>
+</section>
