@@ -11,14 +11,15 @@ router.get('/', async (req, res) => {
           attributes: ['username'],
         },
       ],
+      order: [['created_at', 'DESC']]
     });
 
     const posts = dbPostData.map((Post) =>
       Post.get({ plain: true })
     );
-    console.log(posts)
+    // console.log(posts)
     res.render('homepage', {
-      posts,
+      posts: posts,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

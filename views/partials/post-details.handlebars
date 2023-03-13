@@ -1,25 +1,23 @@
-<div class="col-12 col-sm-9 col-sm-9">
-  <hr>
-  <h2>{{post.post_title}}</h2>
-  <h5>
-    <span>Arthur: {{post.user.username}}</span>
-  </h5>
-  <span>Post on: {{post.post_date}} </span>
+{{!-- {{log posts}} --}}
+<hr>
+<h2>{{post.post_title}}</h2>
+<h5>
+  <span>Arthur: {{post.user.username}}</span>
+</h5>
+<span>Post on: {{post.post_date}} </span>
 
-  {{!-- <h5><span class="badge rounded-pill bg-danger">Food</span><span
-      class="badge rounded-pill bg-primary">Drinks</span></h5> --}}
-  <p>{{post.post_text}}</p>
-  {{#if loggedIn}}
-  <h4>Leave a Comment:</h4>
-  <form role="form">
-    <div class="form-group"><textarea class="form-control form-control" rows="3" required="">value here</textarea></div>
-    <button class="btn btn-primary btn btn-success" type="submit">Submit</button>
-  </form>
-  {{/if}}
-  <div class="row row">
-    {{#each comments as |comment| }}
-    {{> comment-details}}
-    {{/each}}
-  </div>
-</div>
+{{!-- <h5><span class="badge rounded-pill bg-danger">Food</span><span
+    class="badge rounded-pill bg-primary">Drinks</span></h5> --}}
+<p>{{post.post_text}}</p>
+{{#if loggedIn}}
+<h4>Leave a Comment:</h4>
+<form role="form">
+  <div class="form-group"><textarea class="form-control form-control" rows="3" required="">value here</textarea></div>
+  <button class="btn btn-primary btn btn-success" type="submit">Submit</button>
+</form>
+{{/if}}
+<div class="row row">
+  {{#each comments as |comment| }}
+  {{> comment-details}}
+  {{/each}}
 </div>
